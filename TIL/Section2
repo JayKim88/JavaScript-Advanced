@@ -1,0 +1,111 @@
+## CONCEPTUAL ASIDE
+1. Syntax Parsers(구문 분석): Your Code -> [ Extra Stuff ] -> Computer Instructions
+2. Lexical Environment(어휘적 환경): 구문이 어디에서 읽혔는가. 
+3. Execution Contexts: 실행 컨텍스트. 실행 가능한 코드를 형상화하고 구분하는 추상적인 개념
+
+## NAME/VALUE Pairs and Objects
+
+### 9. The Global Environment and The Global Object
+Global Object(window) === 'this'
+Global ? 'Not Inside a Function' 
+
+Execution Context: 
+Global Object, 'this', Outer Environment
+----------------------------------------
+10. The Execution Context - Creation and Hoisting
+20210715
+Global Object, 'this', Outer Environment
+=> Set up memory space for variables and functions "hoisting"
+
+Hoisting?
+모든 자바스크립트의 변수는 처음에 'undefined' 로 취급된다. 
+자바스크립트 엔진은 이 변수에 할당된 값을 알지 못하고 단지 메모리에 저장되어 있다.
+
+자바스크립트엔진이 코드를 실행할 때 비로소 변수와 함수 등의 요소가 메모리에 저장된다. 
+
+### 11. Conceptual Aside: Javascript and 'undefined'
+
+```Javascript
+var a;
+console.log(a)
+```
+=> undefined !== not defined 
+할당된 메모리 자체가 없다면 not defined
+할당은 됐으나 값이 없을 경우 undefined
+
+### 12. The Execution Context - Code Execution
+### 13. Conceptual Aside: Single Threaded, Synchronous Execution
+Single Thread: one commend at a time
+Synchronous: one at a time
+### 14. Function Invocation and the Execution Stack
+Invocation: running a function. in js, by using parenthesis ()
+```js
+function b() {
+
+}
+
+function a() {
+    b();
+}
+
+a();
+```
+Global Execution Context(created and code is executed) => a() => b()
+=> b() pop up => a() pop up => ...
+새로운 함수를 실행할 때마다 새 실행 컨텍스트가 만들어진다. 각 하나의 스택으로 쌓여 실행된다. 
+
+### 15. Functions, Context, and Variable Environments
+variables Environment? 변수가 존재하는 환경
+```Javascript
+function b() {
+    var myVar;
+}
+function a() {
+    var myVar = 2;
+    b();
+}
+var myVar = 1'
+a();
+```
+myVar 1 => myVar 2 => myVar undefined
+
+### 16.The Scope Chain
+```js
+function b() {
+    console.log(myVar)
+}
+function a() {
+    var myVar = 2;
+    b();
+}
+var myVar = 1;
+a();
+```
+answer is 1 why ? a() Reference to Outer Environment => Global Execution Context. b() as well.
+Lexical Environment 어휘적 환경! => 가장 넓은 범위에 있는 환경. 
+변수를 접근할 수 있는 환경 이 곧 Scope Chain
+
+```js
+function a() {
+    function b() {
+        console.log(myVar)
+    }
+    var myVar = 2;
+    b();
+}
+
+var myVar = 1;
+a()
+```
+
+b() => Reference outer Lexical Environment => a() : 자신보다 상위에 있는 환경의 변수를 참고한다. 
+a() => Reference outer Lexical Environment => Global
+
+### 17. Scope, ES6, and let
+Scope is where a variables are available in your code
+block scoping 
+
+### 18. What About Asynchronous callbacks?
+Asynchronous ? more than one at a time
+자바스크립트 엔진: 브라우저 안에 존재.
+브라우저: 렌더링 엔진 + HTTP Request + Javascript 엔진
