@@ -1,1 +1,1 @@
-Advanced Javascript
+Udemy Lecture: Advanced Javascript
