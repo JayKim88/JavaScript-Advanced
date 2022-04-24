@@ -1,1 +1,1 @@
-Udemy Lecture: Advanced Javascript
+Udemy Lecture: Understanding the Weird Parts
